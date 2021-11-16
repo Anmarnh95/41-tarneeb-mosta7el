@@ -59,27 +59,25 @@ class deck:
 
     def number_of_cards(self):
         return len(self._cards)
+
+    def cut_cards(self, number=20):
+        if number > 0: 
+            for i in range(number):
+                self._cards.append(self._cards.pop(0)) 
     
-    def shuffel_deck(self):
-        deck_size = self.number_of_cards()
-        for i in range(deck_size):
-            n_index = random.randint(0,deck_size-1)
-            temp = self._cards[n_index]
-            self._cards[n_index] = self._cards[i]
-            self._cards[i] = temp
+    def shuffel_deck(self, shuffels = 5):
         
+        deck_size = self.number_of_cards()
+        for i in range(shuffels):
+            n_index = random.randint(0,deck_size-1)
+            self.cut_cards(n_index)
+
     def draw(self):
         return self._cards[0]
             
     def draw_last(self):
         return self._cards[-1]
 
-    def cut_cards(self, number):
-        if number < 0:
-            raise "Number is not valid"
-        elif number >52
-        for i in range(number)
-        
 
 
 if __name__ == '__main__':
