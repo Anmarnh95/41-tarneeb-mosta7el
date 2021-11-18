@@ -1,16 +1,28 @@
 import deck as d
 
+'''
+TODO: Documentation!!
+'''
 
 class player:
     def __init__(self):
-        self._cards_to_have = 13
+        self._cards_max = 13
+        self._cards_to_have = self._cards_max
         self._hand = []
         self.turn = False
         self.bet = 0
-        self.
+        
 
     def init_hand(self,new_cards):
         self._hand = new_cards
+
+    def give_card(self, card):
+        if self._cards_to_have > 0:
+            self._hand.append(card)
+            return 0
+        else:
+            return -1
+        
 
     def play_card(self,choice):
         pass
@@ -27,7 +39,7 @@ class game:
         self._teams_2 = ['P1','P3']
         self._team_1_passed = False
         self._team_2_passed = False
-        self._tarneeb = 'S'
+        
         
 
         
@@ -50,9 +62,22 @@ class game:
         if (self._scores[self._team_2[0]] +  self._scores[self._team_2[1]]) >= 41:
             self._team_2_passed = True
 
-    def distribute_cards(self):
-        
-        self._players[]
+    def distribute_cards(self,shuffels=10,distribution_pattern = 3):
+        #TODO: Write a test
+        if distribution_pattern == 3:
+            id_player = 0
+            counter = 0
+            for i in range(16):
+                for card in self._cards:
+                    if counter == 3:
+                        break
+                    counter = counter + 1
+                    self._players['P{}'.format(id_player)].give_card(card)
+                id_player = id_player + 1
+            
+            for i in range(4):
+                self._players['P{}'.format(id_player)].give_card(self._cards[(-1)*i])
+                
 
     def print_scores(self):
         print("Scores: ")
@@ -74,6 +99,8 @@ class game:
             print("Game did not end.")
 
     def play_round(self):
+        tarneeb = 'S'
+        last_cards = []
         self._deck.shuffel_deck()
         self.distribute_cards()
         self.evaluate_score()

@@ -11,7 +11,7 @@ class card:
     def __init__(self,suit,rank):
         self._rank = 2
         self._suit = 'D'
-        if (suit == 'C') or suit == 'D' or suit == 'H' or suit == 'S':
+        if (suit == 'C') or (suit == 'D') or (suit == 'H') or (suit == 'S'):
             self._suit = suit
         else:
             raise TypeError("Suit should be either C,D,H, or S.")
