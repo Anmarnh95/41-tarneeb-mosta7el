@@ -1,11 +1,13 @@
 
 import random
 
+from core import game
+
 class card:
 
     """
-        Initiate a card by choosing rank and suit. 
-        Suit: either 'D' for Dimonds, 'C' for Clubs, 'H' for Hearts, 'S' for Spades
+        Initiate a card by choosing rank and suit. \
+        Suit: either 'D' for Dimonds, 'C' for Clubs, 'H' for Hearts, 'S' for Spades \
         rank: from 2 to 13, 2..10 for normal ranks, 11 for Jacks, 12 for Queens, 13 for Kings, 14 for Aces.
     """
     def __init__(self,suit,rank):
@@ -30,7 +32,7 @@ class card:
     """
     Returns suit and rank as string
     """
-    def get_content_string(self):
+    def get_content_as_string(self):
         return "{0} {1}" .format(self._suit,self._rank)
 
     """
@@ -43,29 +45,80 @@ class card:
                 return True
         return False
 
-class deck:
-    def __init__(self, game_type):
-        if game_type == 41:
-            self._cards = []
-            self.initiate_41_deck()
+        
 
-    def initiate_41_deck(self):
+class Deck:
+
+    """
+    The deck class is responsible for preparing the correct deck structure and holds the playing cards. \
+        The deck is also responsible for shuffeling and drawing. The initializer takes a String, which is for now \
+            either "tarneeb_41" and "trex_long". "tarneeb_41" initializes the correct deck for the tarneb game with \
+                the winning score of 41. "trex_long" prepares a deck for the Trex game with the 4 kingdoms, where every kingdom\
+                    playes 5 different games. inputting anything else will result in an empty deck.
+    """
+
+    def __init__(self, game_type):
+        self._cards = []
+
+        #TODO: Check if you could change that to enum, does Enum exsit in Python ? 
+        if game_type == "tarneeb_41":
+            self._initiate_41_deck()
+        elif game_type == "trex_long":
+            self._initiate_trex_long_deck()
+        else:
+            print("initialized empty deck.")
+
+    """
+    Fills the deck with 52 cars, 13 of each kind. 
+    """
+    def _initiate_41_deck(self):
         for suit in list(['C','S','H','D']):
             for i in range(2,15):
                 self._cards.append(card(suit,i))
 
+    """
+    Tarneeb and Trex have the same deck struckture. 
+    """
+    
+    def _initiate_trex_long_deck(self):
+        self._initiate_41_deck()
+    
+    def is_empty(self):
+        if self._cards.count == 0:
+            return True
+        else:
+            return False
+        
+    """
+    Returns the deck itself.
+    """
     def show_deck(self):
         return self._cards
 
+    """
+    Returns the number of cards.
+    """
     def number_of_cards(self):
         return len(self._cards)
 
+    """
+    Cuts the cars in half at the specified position in 20. 
+    """
+
     def cut_cards(self, number=20):
-        if number > 0: 
-            for i in range(number):
-                self._cards.append(self._cards.pop(0)) 
+        if self.is_empty():
+            if number > 0: 
+                for i in range(number):
+                    self._cards.append(self._cards.pop(0)) 
+        else:
+            print("nothing to cut")
     
+    """
+    Call this function to shuffel the deck. The shuffeling happens by calling cut_cards for a sepecified number of times.\
+        This number can be given by specifing the shuffels parametes.
+    """
     def shuffel_deck(self, shuffels = 5):
+        
         
         deck_size = self.number_of_cards()
         for i in range(shuffels):
@@ -81,7 +134,8 @@ class deck:
 
 
 if __name__ == '__main__':
-    a = deck(41)
+    #TODO: Fix Here
+    a = Deck("tarneeb_41")
     for card in a.show_deck():
-        print(card.get_content_string())
+        print(card.get_content_as_string())
         
